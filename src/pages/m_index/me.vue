@@ -8,8 +8,9 @@
 		<div class="main">
 			<el-row>
 				<el-col :span="18" class="info">
-					<img v-if="info.cover!=''" :src="info.cover"/>
-					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" />
+					<img v-if="info.cover!=''" :src="info.cover" @click="coverBig(info.cover)"/>
+					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" @click="coverBig(info.cover)"/>
+					<wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="isShowBigImg=false" style="z-index: 9;"></wimg>
 					<el-row style="position: absolute;">
 						<el-col>
 							<a style="">{{info.name}}</a>
@@ -87,10 +88,13 @@
 </template>
 
 <script>
+	import wimg from 'w-previewimg'
 	export default {
 		data() {
 			return {
-				
+				imgs:[],
+				current:'',
+				isShowBigImg:false
 			};
 		},
 		created() {
@@ -148,13 +152,21 @@
 					loading.close()
 				});
 			},
+			coverBig (img) {
+				this.imgs.push(img)
+				this.current=img
+				this.isShowBigImg = true
+			},
 			toInfo(){
 				this.$router.push("/info");
 			},
 			toIntro(){
 				this.$router.push("/me_intro");
 			}
-		}
+		},
+		components: {
+			wimg
+		},
 	}
 </script>
 

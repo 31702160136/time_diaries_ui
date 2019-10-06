@@ -31,8 +31,8 @@ import qs from "qs"
 // };
 //上传图片路径
 
-var host="http://www.yulemofang.cn/api/"
-// var host="http://127.0.0.1:8082/api/"
+// var host="http://www.yulemofang.cn/api/"
+var host="http://127.0.0.1:8082/api/"
 var upload_url=host+"v1/user/upload_image"
 var user="v1/user/"
 var diaries="v1/diaries/"

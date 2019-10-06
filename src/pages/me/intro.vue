@@ -8,8 +8,8 @@
 		<div class="main">
 			<el-row>
 				<el-col class="cover" :span="24">
-					<img v-if="info.cover!=''" :src="info.cover">
-					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" />
+					<img v-if="info.cover!=''" :src="info.cover" @click="coverBig(info.cover)">
+					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" @click="coverBig('../../static/images/touxiang2.png')"/>
 					<el-row>
 						<el-col :span="24" class="name">
 							{{info.name}}
@@ -51,13 +51,12 @@
 							<el-row class="image-list" v-if="formData.length!=0">
 								<div v-for="i in item.url">
 									<el-col :span="7" class="image-item">
-										<img alt="" ref="img" :src="i" :style="'display:inline-block;width:100%;height:'+height2+'px;'" @click="showBigImg(i)">
-										<wimg :show="isShowBigImg" :imgs="item.url" :currentImg="current" @close="isShowBigImg = false" style="z-index: 9;"></wimg>
+										<img alt="" ref="img" :src="i" :style="'display:inline-block;width:100%;height:'+height2+'px;'" @click="showBigImg(item.id,i)">
 									</el-col>
 								</div>
 							</el-row>
 							<el-row class="time">
-								<el-col :span="24" style="text-align: left; color: #B4BCCC;">
+								<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;">
 									{{item.create_time}}
 								</el-col>
 							</el-row>
@@ -79,7 +78,7 @@
 						</el-col>
 				</el-row>
 			</div>
-			
+			<wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="closeBigImg()" style="z-index: 9;"></wimg>
 			<el-row>
 				<el-col :span="24" style="text-align: center; color: #DCDCDC;">
 					没有了
@@ -117,6 +116,7 @@
 					fans:0,
 					is_attention:false
 				},
+				imgs:[],
 				formData:[]
 			};
 		},
@@ -228,9 +228,24 @@
 			close(){
 				this.dialogVisible=false
 			},
-			showBigImg (i) {
-				this.current = i
+			showBigImg (id,img) {
+				for(var i=0;i<this.formData.length;i++){
+					if(id==this.formData[i].id){
+						this.imgs=this.formData[i].url
+						break
+					}
+				}
+				this.current=img
 				this.isShowBigImg = true
+			},
+			coverBig (img) {
+				this.imgs.push(img)
+				this.current=img
+				this.isShowBigImg = true
+			},
+			closeBigImg(){
+				this.current=''
+				this.isShowBigImg = false
 			},
 			doComment(index){
 				this.$router.push("/comment?id="+this.formData[index].id);

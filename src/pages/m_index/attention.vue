@@ -21,7 +21,8 @@
 				<el-row class="list-item">
 					<div @click="toIntro(item.be_user_id)">
 						<el-col :span="18" style="text-align: left;">
-							<img :src="item.cover" style="width: 55px;height: 55px; border-radius: 5px;"/>
+							<img v-if="item.cover!=''" :src="item.cover" style="width: 55px;height: 55px; border-radius: 5px;"/>
+							<img v-if="item.cover==''" src="../../static/images/touxiang2.png" style="width: 55px;height: 55px; border-radius: 5px;" />
 							<a style="position: relative; top: -20px; left: 10px;">{{item.name}}</a>
 						</el-col>
 					</div>

@@ -30,12 +30,11 @@
 								<div v-for="i in resData.url">
 									<el-col :span="7" class="image-item">
 										<img alt="" ref="img" :src="i" :style="'display:inline-block;width:100%;height:'+height2+'px;'" @click="showBigImg(i)">
-										<wimg :show="isShowBigImg" :imgs="url" :currentImg="current" @close="isShowBigImg = false" style="z-index: 9;"></wimg>
 									</el-col>
 								</div>
 							</el-row>
 							<el-row class="time">
-								<el-col :span="24" style="text-align: left; color: #B4BCCC;">
+								<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;">
 									{{resData.diaries.create_time}}
 								</el-col>
 							</el-row>
@@ -70,7 +69,7 @@
 									<el-col :span="12">
 										<a style="color: #E6A23C;">{{item.name}}</a>
 									</el-col>
-									<el-col :span="12" style="text-align: right;color: #909399">
+									<el-col :span="12" style="text-align: right;color: #909399;font-size: 12px;">
 										{{$tools().getTime(item.create_time)}}
 									</el-col>
 								</el-row>
@@ -85,6 +84,7 @@
 				</div>
 			</div>
 		</div>
+		<wimg :show="isShowBigImg" :imgs="resData.url" :currentImg="current" @close="closeBigImg()" style="z-index: 9;"></wimg>
 		<div class="foot">
 			<el-row>
 				<el-col :span="24">
@@ -103,7 +103,6 @@
 			return {
 				isShowBigImg: false,
 				current: '',
-				url:["https://time-diary.oss-cn-shenzhen.aliyuncs.com/db6c2293-6671-4563-a138-f2d7b6bf9ac1.png"],
 				resData:{
 					diaries:{
 						comment: '',
@@ -216,9 +215,13 @@
 					}
 				});
 			},
-			showBigImg (i) {
-				this.current = i
+			showBigImg (img) {
+				this.current=img
 				this.isShowBigImg = true
+			},
+			closeBigImg(){
+				this.current=''
+				this.isShowBigImg = false
 			},
 			toBack(){
 				this.$router.go(-1);
@@ -329,7 +332,7 @@
 		text-align: left;
 		overflow: auto;
 		font-size: 13px;
-		border-radius: 10px;
+		border-radius: 7px;
 	}
 	.back{
 		background: #F5F5F5;
