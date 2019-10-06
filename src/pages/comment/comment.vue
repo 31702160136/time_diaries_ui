@@ -139,7 +139,6 @@
 		},
 		computed: {
 			height2(){
-				console.log(1);
 				return this.height1;
 			},
 			reply_user_name(){
@@ -180,7 +179,6 @@
 						}
 						this.resData.url=res.data.data.url;
 						this.resData.comment=res.data.data.comment;
-						console.log(this.resData)
 						var that=this
 						setTimeout(function(){
 							if(that.$refs.img==undefined){

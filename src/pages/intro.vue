@@ -147,14 +147,12 @@
 				});
 				this.$http().QueryDiaries(data).then(res => {
 					var status = res.data.status;
-					console.log(res)
 					if (status) {
 						this.info.name=res.data.data.user_info.name
 						this.info.cover=res.data.data.user_info.cover
 						this.info.attention=res.data.data.total_attention
 						this.info.fans=res.data.data.total_fans
 						this.info.is_attention=res.data.data.is_attention
-						console.log(res)
 						for(var i=0;i<res.data.data.data.length;i++){
 							var text=res.data.data.data[i].diaries.content.replace(/\n/g, '<br>');
 							var is_praise=false;
@@ -222,7 +220,6 @@
 				});
 			},
 			delDiaries(id){
-				console.log(id)
 				var data={
 					id:id
 				}

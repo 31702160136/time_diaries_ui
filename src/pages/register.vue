@@ -69,7 +69,6 @@
 					return;
 				}
 				this.$http().register(formName).then(res => {
-					console.log(res);
 					var status = res.data.status;
 					if (status) {
 						this.$message({

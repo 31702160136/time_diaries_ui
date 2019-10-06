@@ -74,7 +74,6 @@
 					background: 'rgba(0, 0, 0, 0.7)'
 				});
 				this.$http().AttentionUserList().then(res => {
-					console.log(res)
 					var status = res.data.status;
 					if (status) {
 						this.listData=res.data.data;

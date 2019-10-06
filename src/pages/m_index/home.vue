@@ -97,7 +97,6 @@
 		},
 		computed: {
 			height2(){
-				console.log(1);
 				return this.height1;
 			}
 		},
@@ -122,7 +121,6 @@
 					background: 'rgba(0, 0, 0, 0.7)'
 				});
 				this.$http().QueryDiaries(data).then(res => {
-					console.log(res);
 					var status = res.data.status;
 					if (status) {
 						this.formData=[]

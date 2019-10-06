@@ -104,14 +104,13 @@
 				}
 			},
 			beforeAvatarUpload(file) {
-				console.log(2)
+				
 			},
 			sendDiaries(formName) {
 				if(formName.type!=1&&formName.type!=2){
 					this.$message.error("请选择日记公开或私密");
 					return
 				}
-				console.log(formName);
 				this.$http().sendDiaries(formName).then(res => {
 					var status = res.data.status;
 					if (status) {

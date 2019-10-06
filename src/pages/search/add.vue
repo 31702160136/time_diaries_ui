@@ -45,7 +45,6 @@
 					name:this.content
 				}
 				this.$http().findInfoList(data).then(res => {
-					console.log(res)
 					var status = res.data.status;
 					if (status) {
 						this.listData=res.data.data;
