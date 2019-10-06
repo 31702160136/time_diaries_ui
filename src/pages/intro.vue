@@ -9,7 +9,7 @@
 			<el-row>
 				<el-col class="cover" :span="24">
 					<img v-if="info.cover!=''" :src="info.cover" @click="coverBig(info.cover)">
-					<img v-if="info.cover==''" src="../static/images/touxiang2.png"  @click="coverBig('../static/images/touxiang2.png')"/>
+					<img v-if="info.cover==''" src="../static/images/touxiang2.png"  @click="coverBig(require('@/static/images/touxiang2.png'))"/>
 					<el-row>
 						<el-col :span="24" class="name">
 							{{info.name}}

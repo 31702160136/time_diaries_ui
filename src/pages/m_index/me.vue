@@ -9,7 +9,7 @@
 			<el-row>
 				<el-col :span="18" class="info">
 					<img v-if="info.cover!=''" :src="info.cover" @click="coverBig(info.cover)"/>
-					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" @click="coverBig(info.cover)"/>
+					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" @click="coverBig(require('@/static/images/touxiang2.png'))"/>
 					<wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="isShowBigImg=false" style="z-index: 9;"></wimg>
 					<el-row style="position: absolute;">
 						<el-col>
@@ -155,6 +155,7 @@
 			coverBig (img) {
 				this.imgs.push(img)
 				this.current=img
+				// require()
 				this.isShowBigImg = true
 			},
 			toInfo(){
