@@ -13,7 +13,7 @@ export default new Vuex.Store({
 			birthday: '',
 			username:'',
 			fans:'',
-			user_id:''
+			user_id:0
 		}
 	},
 	mutations:{
@@ -25,13 +25,16 @@ export default new Vuex.Store({
 			state.me.birthday=data.user_info.birthday;
 			state.me.username=data.username;
 			state.me.fans=data.total;
-			state.me.user_id=data.user_info.user_id;
+			state.me.user_id=parseInt(data.user_info.user_id)
 		},
 		setMeYouke(state,data){
 			state.me.cover=data.cover;
 			state.me.name=data.name;
 			state.me.username=data.username;
 			state.me.fans=data.fans;
+		},
+		setIsLogin(state,data){
+			state.is_login=data;
 		}
 	}
 })

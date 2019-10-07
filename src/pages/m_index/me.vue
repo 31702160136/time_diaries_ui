@@ -28,7 +28,7 @@
 			</el-row>
 		</div>
 		<div>
-			<div v-if="info.user_id>0">
+			<div v-if="isLogin">
 				<el-row class="b">
 					<div @click="toIntro()">
 						<el-col :span="3" class="set">
@@ -69,14 +69,14 @@
 					</div>
 				</el-row>
 			</div>
-			<div v-if="!(info.user_id>0)">
+			<div v-if="!isLogin">
 				<el-row class="b">
 					<el-col :span="24">
 						<div @click="doLogin()">登陆</div>
 					</el-col>
 				</el-row>
 			</div>
-			<div v-if="info.user_id>0">
+			<div v-if="isLogin">
 				<el-row class="b">
 					<el-col :span="24">
 						<div @click="outLogin()" style="color: red;">注销</div>
@@ -94,7 +94,8 @@
 			return {
 				imgs:[],
 				current:'',
-				isShowBigImg:false
+				isShowBigImg:false,
+				isLogin:false
 			};
 		},
 		created() {
@@ -116,6 +117,7 @@
 				this.$http().getUserInfo().then(res => {
 					var status = res.data.status;
 					if (status) {
+						this.isLogin=true
 						this.$store.commit("setMe",res.data.data);
 					} else {
 						var data={
@@ -145,7 +147,15 @@
 				this.$http().outLogin().then(res => {
 					var status = res.data.status;
 					if (status) {
-						this.$router.go(0);
+						this.isLogin=false
+						var data={
+							name:"游客",
+							username:"0",
+							cover:require("@/static/images/touxiang2.png"),
+							fans:0,
+							user_id:0
+						}
+						this.$store.commit("setMeYouke",data);
 					} else {
 						this.$message.error(res.data.msg);
 					}
