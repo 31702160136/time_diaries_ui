@@ -60,6 +60,7 @@
 </template>
 
 <script>
+	import { Toast } from 'mint-ui';
 	export default {
 		data() {
 			return {
@@ -118,7 +119,7 @@
 		methods:{
 			send(){
 				if(this.content.trim()==""){
-					this.$message.error("内容不能为空");
+					Toast("内容不能为空");
 					return
 				}
 				this.key=this.$store.state.me.user_id.toString()

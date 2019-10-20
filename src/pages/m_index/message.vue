@@ -67,25 +67,27 @@
 		overflow-y: hidden;
 		border-bottom: solid 1px #E6E6E6;
 		z-index: 9;
+		background: white;
 	}
 	ul,li{
 		list-style: none;
 	}
 	.list-item{
 		padding: 10px;
-		
 	}
 	.main{
 		position: absolute;
 		left: 0;
 		right: 0;
-		top: 45px;
+		top: 43px;
 		bottom: 54px;
+		background: ghostwhite;
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
 	.list{
 		padding-left: 10px;
+		background: white;
 	}
 	.logo{
 		min-width: 60px;
@@ -142,6 +144,7 @@
 		color: white;
 		min-width: 15px;
 		min-height: 15px;
+		line-height: 15px;
 		padding: 2px;
 		border-radius:50px;
 		z-index: 2;

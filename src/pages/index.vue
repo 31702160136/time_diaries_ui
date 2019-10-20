@@ -115,6 +115,7 @@
 		color: white;
 		min-width: 15px;
 		min-height: 15px;
+		line-height: 15px;
 		padding: 2px;
 		border-radius:50px;
 		z-index: 2;
