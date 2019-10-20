@@ -56,13 +56,13 @@
 									<img v-else src="@/static/images/xin1.png" @click="praiseDiaries(index)">
 								</el-col>
 								<el-col :span="6" style="text-align: left; border-right: 1px solid #DCDCDC;" class="zan">
-									&nbsp {{item.praise}}
+									{{item.praise}}
 								</el-col>
 								<el-col :span="6" style="text-align: right;" class="xiaoxi">
 									<img src="@/static/images/xiaoxi.png" @click="toComment(index)">
 								</el-col>
-								<el-col :span="6" style="text-align: left;">
-									&nbsp {{item.comment}}
+								<el-col :span="6" style="text-align: left;" class="comment">
+									{{item.comment}}
 								</el-col>
 							</el-row>
 						</el-col>
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
 	import wimg from 'w-previewimg'
 	export default {
 		data() {
@@ -113,13 +114,7 @@
 				if(index==1){
 					data.type=2
 				}
-				
-				const loading = this.$loading({
-					lock: true,
-					text: '请稍后',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
+				Indicator.open('加载中...');
 				this.$http().QueryDiaries(data).then(res => {
 					var status = res.data.status;
 					if (status) {
@@ -136,7 +131,7 @@
 								user_id:res.data.data[i].diaries.user_id,
 								cover:res.data.data[i].diaries.cover,
 								content:text,
-								create_time:this.$tools().getTime(res.data.data[i].diaries.create_time),
+								create_time:this.$tools().noopsycheTime(res.data.data[i].diaries.create_time),
 								praise:parseInt(res.data.data[i].diaries.praise),
 								comment:res.data.data[i].diaries.comment,
 								is_praise:is_praise,
@@ -153,7 +148,7 @@
 					} else {
 						this.$router.push("/login");
 					}
-					loading.close();
+					Indicator.close()
 				});
 			},
 			praiseDiaries(index){
@@ -237,7 +232,6 @@
 	top: 45px;
 	bottom: 60px;
 	overflow-y: auto;
-	
 }
 .main .panel{
 	background: white;
@@ -245,16 +239,24 @@
 	border-top: #DCDCDC solid 1px;
 }
 .main .cover img{
-	width: 50px;
-	height: 50px;
+	width: 60px;
+	height: 60px;
 	margin-right: 10px;
 	border-radius: 5px;
+}
+.content{
+	overflow: hidden;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-overflow: ellipsis;
 }
 .main .infos{
 	text-align: left;
 }
 .image-list{
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 .image-item{
 	margin-right: 4px;
@@ -275,5 +277,15 @@
 .touch-img{
 	transform: scale(1);
 	transition: all ease 0.5s;
+}
+.zan{
+	position: relative;
+	left: 10px;
+	top: -2px;
+}
+.comment{
+	position: relative;
+	left: 10px;
+	top: -2px;	
 }
 </style>

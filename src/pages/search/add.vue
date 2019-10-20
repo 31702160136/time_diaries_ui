@@ -6,7 +6,7 @@
 					<img style="width: 30px; height: 30px;" @click="doBack()" src="../../static/images/back.png"/>
 				</el-col>
 				<el-col :span="20">
-					<input type="text" v-model="content" placeholder="请输入名称" />
+					<input type="text" v-model="content" placeholder="请输入名称"/>
 					<el-button type="warning" size='mini' style="border: none;" @click="doSearch()">搜索</el-button>
 				</el-col>
 			</el-row>
@@ -16,7 +16,8 @@
 				<div @click="toIntro(item.user_id)">
 					<el-row class="list-item">
 						<el-col :span="24" style="text-align: left;">
-							<img :src="item.cover" style="width: 55px;height: 55px; border-radius: 5px;" />
+							<img v-if="item.cover!=''" :src="item.cover" style="width: 55px;height: 55px; border-radius: 5px;" />
+							<img v-if="item.cover==''" src="../../static/images/touxiang2.png" style="width: 55px;height: 55px; border-radius: 5px;"/>
 							<a style="position: relative; top: -20px; left: 10px;">{{item.name}}</a>
 						</el-col>
 					</el-row>
@@ -32,6 +33,7 @@
 </template>
 
 <script>
+	import { Toast } from 'mint-ui';
 	export default {
 		data() {
 			return {
@@ -49,7 +51,7 @@
 					if (status) {
 						this.listData=res.data.data;
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg)
 					}
 				});
 			},
@@ -79,7 +81,8 @@
 	}
 
 	.header {
-		background: #F5F5F5;
+		background: #EFEFEF;
+		border-bottom: 1px solid #E0E0E0 ;
 	}
 
 	.header input {
@@ -88,6 +91,7 @@
 		border-radius: 5px;
 		height: 30px;
 		margin-right: 10px;
+		padding-left: 10px;
 		
 	}
 
@@ -101,9 +105,10 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		top: 65px;
+		top: 56px;
 		bottom: 0;
 		overflow-y: auto;
+		background: #F8F8F8;
 	}
 
 	.list-item {

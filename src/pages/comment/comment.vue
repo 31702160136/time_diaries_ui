@@ -34,7 +34,7 @@
 								</div>
 							</el-row>
 							<el-row class="time">
-								<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;">
+								<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;padding:10px 0 0 0;">
 									{{resData.diaries.create_time}}
 								</el-col>
 							</el-row>
@@ -44,13 +44,13 @@
 									<img v-else src="@/static/images/xin1.png" @click="praiseDiaries()">
 								</el-col>
 								<el-col :span="6" style="text-align: left; border-right: 1px solid #DCDCDC;" class="zan">
-									&nbsp {{resData.diaries.praise}}
+									{{resData.diaries.praise}}
 								</el-col>
 								<el-col :span="6" style="text-align: right;" class="xiaoxi">
 									<img src="../../static/images/comment.png">
 								</el-col>
-								<el-col :span="6" style="text-align: left;color: #f85a09;">
-									&nbsp {{resData.diaries.comment}}
+								<el-col :span="6" style="text-align: left;color: #f85a09;" class="replys">
+									{{resData.diaries.comment}}
 								</el-col>
 							</el-row>
 						</el-col>
@@ -70,11 +70,11 @@
 										<a style="color: #E6A23C;">{{item.name}}</a>
 									</el-col>
 									<el-col :span="12" style="text-align: right;color: #909399;font-size: 12px;">
-										{{$tools().getTime(item.create_time)}}
+										{{$tools().noopsycheTime(item.create_time)}}
 									</el-col>
 								</el-row>
 								<el-row type="flex">
-									<el-col :span="24">
+									<el-col :span="24" class="content">
 										<span v-if="item.reply_user_id>0">回复<a style="color: #E6A23C;">{{item.be_re_name}}: </a></span>{{item.content}}
 									</el-col>
 								</el-row>
@@ -97,6 +97,8 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
 	import wimg from 'w-previewimg'
 	export default {
 		data() {
@@ -150,12 +152,7 @@
 				var data={
 					id:parseInt(this.$route.query.id)
 				}
-				const loading = this.$loading({
-					lock: true,
-					text: '请稍后',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
+				Indicator.open('加载中...');
 				this.$http().DiariesDetails(data).then(res => {
 					var status = res.data.status;
 					if (status) {
@@ -168,7 +165,7 @@
 							comment: parseInt(res.data.data.diaries.comment),
 							content: text,
 							cover: res.data.data.diaries.cover,
-							create_time: this.$tools().getTime(res.data.data.diaries.create_time),
+							create_time: this.$tools().noopsycheTime(res.data.data.diaries.create_time),
 							id: res.data.data.diaries.id,
 							is_praise: is_praise,
 							name: res.data.data.diaries.name,
@@ -189,9 +186,9 @@
 							}
 						},10)
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg);
 					}
-					loading.close()
+					Indicator.close()
 				});
 			},
 			praiseDiaries(){
@@ -225,14 +222,17 @@
 				this.$router.go(-1);
 			},
 			doComment(data){
+				Indicator.open('加载中...');
 				this.$http().Comment(data).then(res => {
 					var status = res.data.status;
 					if (status) {
 						this.formData.content=''
 						this.init()
+						Toast(res.data.msg);
 					} else {
 						this.$router.push("/login");
 					}
+					Indicator.close()
 				});
 			},
 			reply(index){
@@ -252,7 +252,7 @@
 	}
 </script>
 
-<style scoped="scoped1">
+<style scoped="scoped">
 	.comment {
 		background: white;
 		position: absolute;
@@ -264,16 +264,23 @@
 	}
 
 	.header {
-		padding: 10px;
+		padding: 5px;
 	}
 
 	.header-left {
 		text-align: left;
 		font-size: 23px;
 	}
+	.content{
+		overflow: hidden;
+		white-space: normal;
+		word-wrap: break-word;
+		word-break: break-all;
+		text-overflow: ellipsis;
+	}
 	.main{
 		position: absolute;
-		top: 48px;
+		top: 44px;
 		right: 0;
 		left: 0;
 		bottom: 58px;
@@ -362,5 +369,15 @@
 	.foot button{
 		width: 20%;
 		height: 40px;
+	}
+	.zan{
+		position: relative;
+		left: 10px;
+		top: -2px;
+	}
+	.replys{
+		position: relative;
+		left: 10px;
+		top: -2px;
 	}
 </style>

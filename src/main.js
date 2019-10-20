@@ -17,8 +17,12 @@ import {http} from '@/api/shop.js'
 Vue.prototype.$http=http;
 import "@/css/main.css"
 
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(MintUI)
 
 /* eslint-disable no-new */
 new Vue({

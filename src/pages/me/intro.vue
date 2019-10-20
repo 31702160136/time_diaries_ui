@@ -99,6 +99,8 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
 	import wimg from 'w-previewimg'
 	export default {
 		data() {
@@ -137,12 +139,7 @@
 					size:9999,
 					type:3
 				}
-				const loading = this.$loading({
-					lock: true,
-					text: '请稍后',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
+				Indicator.open('加载中...');
 				this.$http().QueryDiaries(data).then(res => {
 					var status = res.data.status;
 					if (status) {
@@ -176,9 +173,9 @@
 							}
 						},10)
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg)
 					}
-					loading.close();
+					Indicator.close();
 				});
 			},
 			praiseDiaries(index){
@@ -207,10 +204,7 @@
 				this.$http().delDiaries(data).then(res => {
 					var status = res.data.status;
 					if (status) {
-						this.$message({
-							message: "删除成功",
-							type: 'success'
-						});
+						Toast("删除成功")
 						for(var i=0;i<this.formData.length;i++){
 							if(data.id==this.formData[i].id){
 								this.formData.splice(i,1)
@@ -219,7 +213,7 @@
 						}
 						this.dialogVisible=false
 					} else {
-						this.$message.error(res.data.msg);
+						Toast("删除成功")
 					}
 				});
 			},
@@ -261,6 +255,7 @@
 
 <style scoped="scoped">
 	.header {
+		padding: 5px;
 	}
 
 	.header-left {

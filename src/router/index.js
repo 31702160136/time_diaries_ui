@@ -10,6 +10,8 @@ import comment from "@/pages/comment/comment.vue"
 import add from "@/pages/search/add.vue"
 import intro from "@/pages/intro.vue"
 import me_intro from "@/pages/me/intro.vue"
+import message from "@/pages/m_index/message.vue"
+import chat from "@/pages/message/chat.vue"
 
 Vue.use(Router)
 
@@ -69,6 +71,16 @@ export default new Router({
 			path: '/me_intro',
 			name: 'me_intro',
 			component: me_intro
+		},
+		{
+			path: '/message',
+			name: 'message',
+			component: message
+		},
+		{
+			path: '/chat',
+			name: 'chat',
+			component: chat
 		}
   ]
 })

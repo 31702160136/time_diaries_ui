@@ -35,7 +35,8 @@
 				<div @click="toIntro(item.be_user_id)">
 					<el-row class="list-item">
 						<el-col :span="18" style="text-align: left;">
-							<img :src="item.cover" style="width: 55px;height: 55px; border-radius: 5px;"/>
+							<img v-if="item.cover!=''" :src="item.cover" style="width: 55px;height: 55px; border-radius: 5px;"/>
+							<img v-if="item.cover==''" src="../../static/images/touxiang2.png" style="width: 55px;height: 55px; border-radius: 5px;" />
 							<a style="position: relative; top: -20px; left: 10px;">{{item.name}}</a>
 						</el-col>
 						<el-col :span="6" style="text-align: right;">
@@ -45,7 +46,7 @@
 				</div>
 			</div>
 			<el-row>
-				<el-col :span="24" style="text-align: center; color: #DCDCDC;" class="xin">
+				<el-col :span="24" style="text-align: center; color: #DCDCDC;" class="end">
 					没有了
 				</el-col>
 			</el-row>
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
 	export default {
 		data() {
 			return {
@@ -67,12 +69,7 @@
 		},
 		methods: {
 			init() {
-				const loading = this.$loading({
-					lock: true,
-					text: '请稍后',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
+				Indicator.open('加载中...');
 				this.$http().AttentionUserList().then(res => {
 					var status = res.data.status;
 					if (status) {
@@ -81,7 +78,7 @@
 						this.$store.state.index=0;
 						this.$router.push("/login");
 					}
-					loading.close()
+					Indicator.close()
 				});
 			},
 			toSearch() {
@@ -131,15 +128,18 @@
 .header{
 	padding: 10px;
 	overflow-y: hidden;
+	background: white;
+	border-bottom: 1px solid #E6E6E6;
 }
 .main{
 	padding: 10px 10px 10px 15px;
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 48px;
+	top: 54px;
 	bottom: 60px;
 	overflow-y: auto;
+	background: white;
 }
 .list-item{
 	border-bottom: #DCDCDC 1px solid;
@@ -148,8 +148,13 @@
 }
 .input input{
 	border-radius: 5px;
-	height: 20px;
+	height: 30px;
 	width: 100%;
-	border: solid #E6A23C 1px;
+	border: none;
+	font-size: 20px;
+	border: #F0F0F0 solid 1px;
+}
+.end{
+	margin-top: 10px;
 }
 </style>

@@ -42,11 +42,13 @@
 				</el-col>
 			</el-row>
 		</div>
-		<wimg :show="isShowBigImg" :imgs="formData.url" :currentImg="current" @close="isShowBigImg = false" style="z-index: 9;"></wimg>
+		<wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="closeBigImg()" style="z-index: 9;"></wimg>
 	</div>
 </template>
 
 <script>
+	import { Toast } from 'mint-ui';
+	import { Indicator } from 'mint-ui';
 	import wimg from 'w-previewimg'
 	import {
 		http,
@@ -55,6 +57,7 @@
 	export default {
 		data() {
 			return {
+				imgs:[],
 				current:'',
 				isShowBigImg: false,
 				upload_url: upload_url,
@@ -82,9 +85,14 @@
 			}
 		},
 		methods: {
-			showBigImg (i) {
-				this.current = i
+			showBigImg (img) {
+				this.imgs=this.formData.url
+				this.current=img
 				this.isShowBigImg = true
+			},
+			closeBigImg(){
+				this.current=''
+				this.isShowBigImg = false
 			},
 			doDel(index) {
 				this.formData.url.splice(index, 1);
@@ -94,17 +102,15 @@
 			},
 			handleAvatarSuccess(res, file) {
 				if(res.status){
-					this.$message({
-						message: res.msg,
-						type: 'success'
-					});
+					Toast(res.msg);
 					this.formData.url.push(res.data.url);
 				}else{
-					this.$message.error(res.msg);
+					Toast(res.msg);
 				}
+				Indicator.close()
 			},
 			beforeAvatarUpload(file) {
-				
+				Indicator.open('上传中...');
 			},
 			sendDiaries(formName) {
 				if(formName.type!=1&&formName.type!=2){
@@ -115,12 +121,9 @@
 					var status = res.data.status;
 					if (status) {
 						this.$router.go(-1);
-						this.$message({
-							message: res.data.msg,
-							type: 'success'
-						});
+						Toast(res.data.msg);
 					} else {
-						this.$router.push("/login");
+						this.$message.error(res.data.msg);
 					}
 				});
 			}

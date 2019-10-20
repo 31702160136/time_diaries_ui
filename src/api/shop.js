@@ -32,10 +32,12 @@ import qs from "qs"
 //上传图片路径
 
 var host="http://www.yulemofang.cn/api/"
+var socket="www.yulemofang.cn/api/"
 // var host="http://127.0.0.1:8082/api/"
 var upload_url=host+"v1/user/upload_image"
 var user="v1/user/"
 var diaries="v1/diaries/"
+var msg="v1/msg/"
 
 let http = () => {
 	axios.defaults.headers.common['Token'] = cookie().getCookie("token");
@@ -157,7 +159,7 @@ let http = () => {
 				url: host + user + "user_attention_list"
 			})
 		},
-		//查询当前关注的用户
+		//搜索用户
 		findInfoList(data) {
 			return axios({
 				method: "get",
@@ -173,6 +175,14 @@ let http = () => {
 				data:qs.stringify(data)
 			})
 		},
+		//发送消息
+		sendMsg(data) {
+			return axios({
+				method: "post",
+				url: host + msg + "send",
+				data:qs.stringify(data)
+			})
+		},
 
 	}
 }
@@ -181,5 +191,6 @@ let http = () => {
 
 export {
 	http,
-	upload_url
+	upload_url,
+	socket
 };

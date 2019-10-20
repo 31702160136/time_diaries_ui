@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="intro">
 		<el-row class="header" type="flex" align="middle">
 			<el-col :span="6" class="header-left">
 				<div class="grid-content bg-purple-dark"><img style="width: 30px; height: 30px;" @click="toBack()" src="../static/images/back.png"/></div>
@@ -53,7 +53,7 @@
 								</div>
 							</el-row>
 							<el-row class="time">
-								<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;">
+								<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;padding: 10px 0 10px 0;">
 									{{item.create_time}}
 								</el-col>
 							</el-row>
@@ -92,7 +92,7 @@
 					|
 				</el-col>
 				<el-col :span="11">
-					<div @click="$message('请期待')">
+					<div @click="toChat()">
 						聊天
 					</div>
 				</el-col>
@@ -102,6 +102,8 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
 	import wimg from 'w-previewimg'
 	export default {
 		data() {
@@ -115,7 +117,8 @@
 					cover:'',
 					attention:0,
 					fans:0,
-					is_attention:false
+					is_attention:false,
+					user_id:0
 				},
 				formData:[],
 				imgs:[]
@@ -139,12 +142,7 @@
 					user_id:parseInt(this.$route.query.user_id),
 					type:1
 				}
-				const loading = this.$loading({
-					lock: true,
-					text: '请稍后',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
+				Indicator.open("加载中...")
 				this.$http().QueryDiaries(data).then(res => {
 					var status = res.data.status;
 					if (status) {
@@ -153,6 +151,7 @@
 						this.info.attention=res.data.data.total_attention
 						this.info.fans=res.data.data.total_fans
 						this.info.is_attention=res.data.data.is_attention
+						this.info.user_id=res.data.data.user_info.user_id
 						for(var i=0;i<res.data.data.data.length;i++){
 							var text=res.data.data.data[i].diaries.content.replace(/\n/g, '<br>');
 							var is_praise=false;
@@ -164,7 +163,7 @@
 								name:res.data.data.data[i].diaries.name,
 								cover:res.data.data.data[i].diaries.cover,
 								content:text,
-								create_time:this.$tools().getTime(res.data.data.data[i].diaries.create_time),
+								create_time:this.$tools().noopsycheTime(res.data.data.data[i].diaries.create_time),
 								praise:parseInt(res.data.data.data[i].diaries.praise),
 								comment:res.data.data.data[i].diaries.comment,
 								is_praise:is_praise,
@@ -180,7 +179,7 @@
 					} else {
 						this.$message.error(res.data.msg);
 					}
-					loading.close();
+					Indicator.close();
 				});
 			},
 			praiseDiaries(index){
@@ -211,8 +210,10 @@
 					if (status) {
 						if(this.info.is_attention){
 							this.info.is_attention=false
+							Toast("取消成功")
 						}else{
 							this.info.is_attention=true
+							Toast("关注成功")
 						}
 					} else {
 						this.$router.push("/login");
@@ -265,6 +266,9 @@
 			},
 			toBack(){
 				this.$router.go(-1)
+			},
+			toChat(){
+				this.$router.push("/chat?user_id="+this.info.user_id+"&cover="+this.info.cover+"&name="+this.info.name)
 			}
 		},
 		components: {
@@ -275,7 +279,16 @@
 
 
 <style scoped="scoped">
+	.intro{
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: white;
+	}
 	.header {
+		padding: 5px;
 	}
 
 	.header-left {
@@ -287,9 +300,10 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		top: 45px;
+		top: 47px;
 		bottom: 55px;
 		overflow-y: auto;
+		background: white;
 	}
 
 	.cover {

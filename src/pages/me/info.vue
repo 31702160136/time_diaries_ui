@@ -66,6 +66,7 @@
 </template>
 
 <script>
+	import { Toast } from 'mint-ui';
 	import {
 		http,
 		upload_url
@@ -119,12 +120,9 @@
 					var status = res.data.status;
 					if (status) {
 						this.$router.go(-1);
-						this.$message({
-							message: res.data.msg,
-							type: 'success'
-						});
+						Toast(res.data.msg)
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg)
 					}
 				});
 			},

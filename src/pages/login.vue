@@ -44,6 +44,8 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
 	import {http} from "../api/shop.js"
 	export default {
 		data() {
@@ -56,14 +58,19 @@
 		},
 		methods:{
 			doLogin(formName){
+				Indicator.open("登陆中...")
 				this.$http().login(formName).then(res => {
 					var status = res.data.status;
 					if (status) {
 						this.$cookie().setCookie("token",res.data.data.token);
+						this.$store.state.refresh=false
+						this.$store.state.refresh=true
 						this.$router.replace("/index");
 					} else {
-						this.$message.error(res.data.msg);
+						this.$store.state.refresh=false
+						Toast(res.data.msg);
 					}
+					Indicator.close()
 				});
 			},
 			doRegister(){

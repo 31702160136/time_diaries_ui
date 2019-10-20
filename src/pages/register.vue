@@ -49,6 +49,8 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
 	import {
 		http
 	} from "../api/shop.js"
@@ -65,20 +67,19 @@
 		methods: {
 			doRegister(formName) {
 				if (formName.password != formName.re_password) {
-					this.$message.error("两次密码不一致");
+					Toast("两次密码不一致");
 					return;
 				}
+				Indicator.open("注册中...")
 				this.$http().register(formName).then(res => {
 					var status = res.data.status;
 					if (status) {
-						this.$message({
-							message: res.data.msg,
-							type: 'success'
-						});
+						Toast(res.data.msg)
 						this.$router.go(-1);
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg)
 					}
+					Indicator.close()
 				});
 			},
 			doBack() {

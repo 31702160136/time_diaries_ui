@@ -5,6 +5,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state:{
 		index:0,
+		hint:0,
 		me:{
 			cover: '',
 			name: '',
@@ -14,7 +15,11 @@ export default new Vuex.Store({
 			username:'',
 			fans:'',
 			user_id:0
-		}
+		},
+		wx:null,
+		dialogueList:[],
+		refresh:true,
+		isReceive:false
 	},
 	mutations:{
 		setMe(state,data){
@@ -26,6 +31,9 @@ export default new Vuex.Store({
 			state.me.username=data.username;
 			state.me.fans=data.total;
 			state.me.user_id=parseInt(data.user_info.user_id)
+		},
+		setList(state,data){
+			state.dialogueList=data
 		},
 		setMeYouke(state,data){
 			state.me.cover=data.cover;

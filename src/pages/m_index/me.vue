@@ -88,6 +88,7 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
 	import wimg from 'w-previewimg'
 	export default {
 		data() {
@@ -108,12 +109,7 @@
 		},
 		methods:{
 			init() {
-				const loading = this.$loading({
-					lock: true,
-					text: '请稍后',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
+				Indicator.open('加载中...');
 				this.$http().getUserInfo().then(res => {
 					var status = res.data.status;
 					if (status) {
@@ -128,7 +124,7 @@
 						}
 						this.$store.commit("setMeYouke",data);
 					}
-					loading.close()
+					Indicator.close()
 				});
 			},
 			doEditPassword(){
@@ -138,12 +134,7 @@
 				this.$router.push("/login");
 			},
 			outLogin(){
-				const loading = this.$loading({
-					lock: true,
-					text: '正在注销当前用户',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
+				Indicator.open('注销中...');
 				this.$http().outLogin().then(res => {
 					var status = res.data.status;
 					if (status) {
@@ -156,10 +147,11 @@
 							user_id:0
 						}
 						this.$store.commit("setMeYouke",data);
+						this.$store.state.refresh=false
 					} else {
 						this.$message.error(res.data.msg);
 					}
-					loading.close()
+					Indicator.close()
 				});
 			},
 			coverBig (img) {

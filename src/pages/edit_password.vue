@@ -49,6 +49,8 @@
 </template>
 
 <script>
+	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
 	import {
 		http
 	} from "../api/shop.js"
@@ -64,24 +66,16 @@
 		},
 		methods: {
 			doEditPassword(formName) {
-				const loading = this.$loading({
-					lock: true,
-					text: '请稍后',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
+				Indicator.open("修改中...")
 				this.$http().editPassword(formName).then(res => {
 					var status = res.data.status;
 					if (status) {
-						this.$message({
-							message: res.data.msg,
-							type: 'success'
-						});
+						Toast(res.data.msg)
 						this.$router.replace("/index")
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg)
 					}
-					loading.close()
+					Indicator.close()
 				});
 			},
 			doBack() {

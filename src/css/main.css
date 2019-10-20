@@ -1,3 +1,6 @@
+body{
+	margin: 0;
+}
 .el-upload {
 	display: block;
 	width: 100%;
