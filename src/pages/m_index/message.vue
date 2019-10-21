@@ -98,7 +98,6 @@
 	}
 	.cover{
 		width: 100%;
-		background: #E6A23C;
 		border-radius: 6px;
 		width: 60px;
 		height: 60px;

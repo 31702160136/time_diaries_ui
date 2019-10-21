@@ -5,7 +5,7 @@
 				<img style="width: 30px; height: 30px;" @click="toBack()" src="../../static/images/back.png"/>
 			</el-col>
 			<el-col :span="12" class="header-name">
-				{{msg.name}}
+				{{name}}
 			</el-col>
 		</el-row>
 		<div class="main" id="main">

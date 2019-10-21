@@ -13,6 +13,14 @@
 			</el-row>
 			<el-form label-width="80px" class="form" :model="ruleForm" status-icon ref="ruleForm2">
 				<div class="form-inputs">
+					<el-row class="name">
+						<el-col :span="3">
+							<img class="user-icon" src="../static/images/name.png" />
+						</el-col>
+						<el-col :span="21">
+							<input placeholder="名称" v-model="ruleForm.name" />
+						</el-col>
+					</el-row>
 					<el-row class="username">
 						<el-col :span="3">
 							<img class="user-icon" src="../static/images/ren.png" />
@@ -60,7 +68,8 @@
 				ruleForm: {
 					username: '',
 					password: '',
-					re_password: ''
+					re_password: '',
+					name:''
 				}
 			};
 		},
@@ -69,6 +78,14 @@
 				if (formName.password != formName.re_password) {
 					Toast("两次密码不一致");
 					return;
+				}
+				if(formName.name.trim()==""){
+					Toast("请输入名称");
+					return
+				}
+				if(formName.username.trim()==""){
+					Toast("请输入账号");
+					return
 				}
 				Indicator.open("注册中...")
 				this.$http().register(formName).then(res => {
@@ -149,8 +166,6 @@
 	}
 
 	.username {
-		border-bottom: solid #DCDCDC 1px;
-		padding-bottom: 7px;
 	}
 
 	.password {
