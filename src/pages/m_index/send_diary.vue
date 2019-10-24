@@ -114,7 +114,7 @@
 			},
 			sendDiaries(formName) {
 				if(formName.type!=1&&formName.type!=2){
-					this.$message.error("请选择日记公开或私密");
+					Toast("请选择日记公开或私密");
 					return
 				}
 				this.$http().sendDiaries(formName).then(res => {
@@ -123,7 +123,7 @@
 						this.$router.go(-1);
 						Toast(res.data.msg);
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg);
 					}
 				});
 			}

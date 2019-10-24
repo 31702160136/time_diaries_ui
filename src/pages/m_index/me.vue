@@ -89,6 +89,7 @@
 
 <script>
 	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
 	import wimg from 'w-previewimg'
 	export default {
 		data() {
@@ -149,7 +150,7 @@
 						this.$store.commit("setMeYouke",data);
 						this.$store.state.refresh=false
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg);
 					}
 					Indicator.close()
 				});

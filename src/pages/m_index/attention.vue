@@ -56,6 +56,7 @@
 
 <script>
 	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
 	export default {
 		data() {
 			return {
@@ -96,7 +97,7 @@
 					if (status) {
 						this.init()
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg);
 					}
 				});
 			},

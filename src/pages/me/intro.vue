@@ -28,60 +28,65 @@
 					</el-row>
 				</el-col>
 			</el-row>
-			<div v-for="(item,index) of formData" :key="index">
-				<el-row type="flex" class="panel">
-						<div class="cover">
-							<img v-if="item.cover!=''" :src="item.cover" />
-							<img v-if="item.cover==''" src="../../static/images/touxiang2.png" />
-						</div>
-						<el-col :span="20" class="infos">
-							<el-row>
-								<el-col :span="18" class="name" style="margin-bottom: 10px;color: #E6A23C;">
-									{{item.name}}
-								</el-col>
-								<el-col :span="6" style="text-align: right;color: red;">
-									<el-button type="danger" plain @click="dialogVisible=true,delId=item.id" size="mini">删除</el-button>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="22" class="content">
-									<div v-html="item.content"></div>
-								</el-col>
-							</el-row>
-							<el-row class="image-list" v-if="formData.length!=0">
-								<div v-for="i in item.url">
-									<el-col :span="7" class="image-item">
-										<img alt="" ref="img" :src="i" :style="'display:inline-block;width:100%;height:'+height2+'px;'" @click="showBigImg(item.id,i)">
+			<ul
+			v-infinite-scroll="loadMore"
+			infinite-scroll-disabled="loading"
+			infinite-scroll-distance="0">
+				<li v-for="(item,index) of formData" :key="index">
+					<el-row type="flex" class="panel">
+							<div class="cover">
+								<img v-if="item.cover!=''" :src="item.cover" />
+								<img v-if="item.cover==''" src="../../static/images/touxiang2.png" />
+							</div>
+							<el-col :span="20" class="infos">
+								<el-row>
+									<el-col :span="18" class="name" style="margin-bottom: 10px;color: #E6A23C;">
+										{{item.name}}
 									</el-col>
-								</div>
-							</el-row>
-							<el-row class="time">
-								<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;">
-									{{item.create_time}}
-								</el-col>
-							</el-row>
-							<el-row class="more" type="flex" align="middle">
-								<el-col :span="6" style="text-align: right;" class="xin">
-									<img v-if="item.is_praise" src="@/static/images/xin2.png" @click="praiseDiaries(index)">
-									<img v-else src="@/static/images/xin1.png" @click="praiseDiaries(index)">
-								</el-col>
-								<el-col :span="6" style="text-align: left; border-right: 1px solid #DCDCDC;" class="zan">
-									&nbsp {{item.praise}}
-								</el-col>
-								<el-col :span="6" style="text-align: right;" class="xiaoxi">
-									<img src="@/static/images/xiaoxi.png" @click="doComment(index)">
-								</el-col>
-								<el-col :span="6" style="text-align: left;">
-									&nbsp {{item.comment}}
-								</el-col>
-							</el-row>
-						</el-col>
-				</el-row>
-			</div>
+									<el-col :span="6" style="text-align: right;color: red;">
+										<el-button type="danger" plain @click="dialogVisible=true,delId=item.id" size="mini">删除</el-button>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="22" class="content">
+										<div v-html="item.content"></div>
+									</el-col>
+								</el-row>
+								<el-row class="image-list" v-if="formData.length!=0">
+									<div v-for="i in item.url">
+										<el-col :span="7" class="image-item">
+											<img alt="" ref="img" :src="i" :style="'display:inline-block;width:100%;height:'+height2+'px;'" @click="showBigImg(item.id,i)">
+										</el-col>
+									</div>
+								</el-row>
+								<el-row class="time">
+									<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;">
+										{{item.create_time}}
+									</el-col>
+								</el-row>
+								<el-row class="more" type="flex" align="middle">
+									<el-col :span="6" style="text-align: right;" class="xin">
+										<img v-if="item.is_praise" src="@/static/images/xin2.png" @click="praiseDiaries(index)">
+										<img v-else src="@/static/images/xin1.png" @click="praiseDiaries(index)">
+									</el-col>
+									<el-col :span="6" style="text-align: left; border-right: 1px solid #DCDCDC;" class="zan">
+										&nbsp {{item.praise}}
+									</el-col>
+									<el-col :span="6" style="text-align: right;" class="xiaoxi">
+										<img src="@/static/images/xiaoxi.png" @click="doComment(index)">
+									</el-col>
+									<el-col :span="6" style="text-align: left;">
+										&nbsp {{item.comment}}
+									</el-col>
+								</el-row>
+							</el-col>
+					</el-row>
+				</li>
+			</ul>
 			<wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="closeBigImg()" style="z-index: 9;"></wimg>
 			<el-row>
 				<el-col :span="24" style="text-align: center; color: #DCDCDC;">
-					没有了
+					{{bottomCaption}}
 				</el-col>
 			</el-row>
 		</div>
@@ -111,6 +116,8 @@
 				isShowBigImg: false,
 				current: '',
 				height1:100,
+				isLoading:false,
+				bottomCaption:"加载中...",
 				info:{
 					name:'',
 					cover:'',
@@ -119,11 +126,16 @@
 					is_attention:false
 				},
 				imgs:[],
-				formData:[]
+				formData:[],
+				data:{
+					page:1,
+					size:20,
+					type:3
+				}
 			};
 		},
 		created(){
-			this.init()
+			this.init(this.data)
 		},
 		computed: {
 			height2(){
@@ -131,14 +143,17 @@
 			}
 		},
 		methods:{
+			loadMore() {
+				if(this.formData.length==0||this.isLoading||this.bottomCaption=="没有了"){
+					return
+				}
+				this.isLoading=true
+				this.data.page+=1
+				this.init(this.data)
+			},
 			tes(){
 			},
-			init(){
-				var data={
-					page:1,
-					size:9999,
-					type:3
-				}
+			init(data){
 				Indicator.open('加载中...');
 				this.$http().QueryDiaries(data).then(res => {
 					var status = res.data.status;
@@ -148,6 +163,11 @@
 						this.info.attention=res.data.data.total_attention
 						this.info.fans=res.data.data.total_fans
 						this.info.is_attention=res.data.data.is_attention
+						if(res.data.data.data.length==0){
+							this.bottomCaption="没有了"
+							Indicator.close()
+							return
+						}
 						for(var i=0;i<res.data.data.data.length;i++){
 							var text=res.data.data.data[i].diaries.content.replace(/\n/g, '<br>');
 							var is_praise=false;
@@ -176,6 +196,10 @@
 						Toast(res.data.msg)
 					}
 					Indicator.close();
+					this.isLoading=false
+					if(this.formData.length<=2){
+						this.bottomCaption="没有了"
+					}
 				});
 			},
 			praiseDiaries(index){
@@ -254,6 +278,11 @@
 
 
 <style scoped="scoped">
+	ul,li{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
 	.header {
 		padding: 5px;
 	}

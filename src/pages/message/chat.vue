@@ -212,7 +212,7 @@
 						this.content=''
 						this.toBottom(that)
 					} else {
-						this.$message.error(res.data.msg);
+						Toast(res.data.msg);
 					}
 				});
 			},
