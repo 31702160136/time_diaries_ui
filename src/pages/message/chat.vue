@@ -16,8 +16,8 @@
 				<el-col :span="24" class="left" v-if="item.send_id!=$store.state.me.user_id">
 					<el-row type="flex">
 						<el-col :span="3" class="logo">
-							<img v-if="msg.cover!=''" :src="msg.cover" class="cover"/>
-							<img v-if="msg.cover==''" src="../../static/images/touxiang2.png"  class="cover"/>
+							<img v-if="msg.cover!=''" :src="msg.cover" class="cover" @click="toIntro(item.send_id)"/>
+							<img v-if="msg.cover==''" src="../../static/images/touxiang2.png"  class="cover" @click="toIntro(item.send_id)"/>
 						</el-col>
 						<el-col :span="13" class="body">
 							<div class="jiao"></div>
@@ -40,8 +40,8 @@
 								</div>
 							</el-col>
 							<el-col :span="3" class="logo">
-								<img v-if="info.cover!=''" :src="info.cover" class="cover"/>
-								<img v-if="info.cover==''" src="../../static/images/touxiang2.png"  class="cover"/>
+								<img v-if="info.cover!=''" :src="info.cover" class="cover" @click="toMyIntro()"/>
+								<img v-if="info.cover==''" src="../../static/images/touxiang2.png"  class="cover" @click="toMyIntro()"/>
 							</el-col>
 						</el-row>
 					</div>
@@ -228,7 +228,14 @@
 			},
 			toBack(){
 				this.$router.go(-1);
+			},
+			toIntro(id){
+				this.$router.push("/intro?user_id="+id);
+			},
+			toMyIntro(){
+				this.$router.push("/me_intro");
 			}
+			
 		}
 	}
 </script>

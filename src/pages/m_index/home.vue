@@ -22,7 +22,6 @@
 		</div>
 		<div class="main">
 			<mt-loadmore :top-method="loadTop" ref="loadmore">
-			
 			<ul
 			  v-infinite-scroll="loadMore"
 			  infinite-scroll-disabled="loading"
@@ -189,11 +188,14 @@
 								that.$refs.img[i].style='display:inline-block;width:100%;height:'+that.$refs.img[0].clientWidth+'px;'
 							}
 						},10)
-						this.$refs.loadmore.onTopLoaded();
-						this.isLoading=false
 					} else {
 						this.$router.push("/login");
 					}
+					if(this.formData.length<=2){
+						this.bottomCaption="没有了"
+					}
+					this.isLoading=false
+					this.$refs.loadmore.onTopLoaded();
 					Indicator.close()
 				});
 			},
@@ -262,6 +264,7 @@ ul,li{
 	padding: 10px 10px 0 10px;
 	font-weight:500;
 	overflow-y: hidden;
+	border-bottom: #DCDCDC solid 1px;
 }
 .diary-circle{
 	color: #DCDCDC;
@@ -280,14 +283,13 @@ ul,li{
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 45px;
-	bottom: 60px;
+	top: 46px;
+	bottom: 56px;
 	overflow-y: auto;
 }
 .main .panel{
 	background: white;
 	padding: 15px;
-	border-top: #DCDCDC solid 1px;
 }
 .main .cover img{
 	width: 60px;

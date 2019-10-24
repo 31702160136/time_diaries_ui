@@ -96,6 +96,7 @@
 					var status = res.data.status;
 					if (status) {
 						this.init()
+						Toast("取消关注成功")
 					} else {
 						Toast(res.data.msg);
 					}
