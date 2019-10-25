@@ -40,7 +40,7 @@
 							</el-row>
 							<el-row class="more" type="flex" align="middle">
 								<el-col :span="6" style="text-align: right;" class="xin">
-									<img v-if="resData.diaries.is_praise" src="@/static/images/xin2.png" @click="praiseDiaries()">
+									<img v-if="resData.diaries.is_praise" src="../../static/images/xin2.png" @click="praiseDiaries()">
 									<img v-else src="@/static/images/xin1.png" @click="praiseDiaries()">
 								</el-col>
 								<el-col :span="6" style="text-align: left; border-right: 1px solid #DCDCDC;" class="zan">

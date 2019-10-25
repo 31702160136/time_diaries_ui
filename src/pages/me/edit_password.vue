@@ -2,20 +2,20 @@
 	<div class="login">
 		<el-row class="header" type="flex">
 			<el-col :span="12" class="header-left">
-				<div class="grid-content bg-purple-dark"><img style="width: 30px; height: 30px;" @click="doBack()" src="../static/images/back.png"/></div>
+				<div class="grid-content bg-purple-dark"><img style="width: 30px; height: 30px;" @click="doBack()" src="../../static/images/back.png"/></div>
 			</el-col>
 		</el-row>
 		<div class="main">
 			<el-row>
 				<el-col :span="24">
-					<img class="logo" src="../static/images/uugai.com_1568963617246.png" />
+					<img class="logo" src="../../static/images/uugai.com_1568963617246.png" />
 				</el-col>
 			</el-row>
 			<el-form label-width="80px" class="form" :model="ruleForm" status-icon ref="ruleForm2">
 				<div class="form-inputs">
 					<el-row class="username">
 						<el-col :span="3">
-							<img class="user-icon" src="../static/images/suo.png" />
+							<img class="user-icon" src="../../static/images/suo.png" />
 						</el-col>
 						<el-col :span="21">
 							<input placeholder="原密码" type="password" v-model="ruleForm.old_password" />
@@ -23,7 +23,7 @@
 					</el-row>
 					<el-row class="password">
 						<el-col :span="3">
-							<img class="user-icon" src="../static/images/suo.png" />
+							<img class="user-icon" src="../../static/images/suo.png" />
 						</el-col>
 						<el-col :span="21">
 							<input placeholder="密码" type="password" v-model="ruleForm.password" />
@@ -31,7 +31,7 @@
 					</el-row>
 					<el-row class="password">
 						<el-col :span="3">
-							<img class="user-icon" src="../static/images/suo.png" />
+							<img class="user-icon" src="../../static/images/suo.png" />
 						</el-col>
 						<el-col :span="21">
 							<input placeholder="确认密码" type="password" v-model="ruleForm.re_password" />
@@ -51,9 +51,6 @@
 <script>
 	import { Indicator } from 'mint-ui';
 	import { Toast } from 'mint-ui';
-	import {
-		http
-	} from "../api/shop.js"
 	export default {
 		data() {
 			return {

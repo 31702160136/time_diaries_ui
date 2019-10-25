@@ -9,7 +9,7 @@
 			<el-row>
 				<el-col class="cover" :span="24">
 					<img v-if="info.cover!=''" :src="info.cover" @click="coverBig(info.cover)">
-					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" @click="coverBig(require('@/static/images/touxiang2.png'))"/>
+					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" @click="coverBig(require('../../static/images/touxiang2.png'))"/>
 					<el-row>
 						<el-col :span="24" class="name">
 							{{info.name}}
@@ -69,14 +69,14 @@
 								</el-row>
 								<el-row class="more" type="flex" align="middle">
 									<el-col :span="6" style="text-align: right;" class="xin">
-										<img v-if="item.is_praise" src="@/static/images/xin2.png" @click="praiseDiaries(index)">
-										<img v-else src="@/static/images/xin1.png" @click="praiseDiaries(index)">
+										<img v-if="item.is_praise" src="../../static/images/xin2.png" @click="praiseDiaries(index)">
+										<img v-else src="../../static/images/xin1.png" @click="praiseDiaries(index)">
 									</el-col>
 									<el-col :span="6" style="text-align: left; border-right: 1px solid #DCDCDC;" class="zan">
 										&nbsp {{item.praise}}
 									</el-col>
 									<el-col :span="6" style="text-align: right;" class="xiaoxi">
-										<img src="@/static/images/xiaoxi.png" @click="doComment(index)">
+										<img src="../../static/images/xiaoxi.png" @click="doComment(index)">
 									</el-col>
 									<el-col :span="6" style="text-align: left;">
 										&nbsp {{item.comment}}

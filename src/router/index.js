@@ -2,15 +2,15 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/pages/login.vue'
 import index from "@/pages/index.vue"
-import send_diary from "@/pages/m_index/send_diary.vue"
+import send_diary from "@/pages/send_diary/send_diary.vue"
 import register from "@/pages/register.vue"
-import edit_password from "@/pages/edit_password.vue"
+import edit_password from "@/pages/me/edit_password.vue"
 import info from "@/pages/me/info.vue"
-import comment from "@/pages/comment/comment.vue"
-import add from "@/pages/search/add.vue"
-import intro from "@/pages/intro.vue"
+import comment from "@/pages/home/comment.vue"
+import add from "@/pages/attention/add.vue"
+import intro from "@/pages/home/intro.vue"
 import me_intro from "@/pages/me/intro.vue"
-import message from "@/pages/m_index/message.vue"
+import message from "@/pages/message/message.vue"
 import chat from "@/pages/message/chat.vue"
 
 Vue.use(Router)

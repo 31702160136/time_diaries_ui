@@ -9,7 +9,7 @@
 			<el-row>
 				<el-col :span="18" class="info">
 					<img v-if="info.cover!=''" :src="info.cover" @click="coverBig(info.cover)"/>
-					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" @click="coverBig(require('@/static/images/touxiang2.png'))"/>
+					<img v-if="info.cover==''" src="../../static/images/touxiang2.png" @click="coverBig(require('../../static/images/touxiang2.png'))"/>
 					<wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="isShowBigImg=false" style="z-index: 9;"></wimg>
 					<el-row style="position: absolute;">
 						<el-col>
@@ -139,6 +139,8 @@
 				this.$http().outLogin().then(res => {
 					var status = res.data.status;
 					if (status) {
+						//退出登陆后清空聊天记录
+						this.$store.state.dialogueList=[]
 						this.isLogin=false
 						var data={
 							name:"游客",

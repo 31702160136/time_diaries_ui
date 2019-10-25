@@ -59,14 +59,14 @@
 								</el-row>
 								<el-row class="more" type="flex" align="middle">
 									<el-col :span="6" style="text-align: right;" class="xin">
-										<img v-if="item.is_praise" src="@/static/images/xin2.png" @click="praiseDiaries(index)">
-										<img v-else src="@/static/images/xin1.png" @click="praiseDiaries(index)">
+										<img v-if="item.is_praise" src="../../static/images/xin2.png" @click="praiseDiaries(index)">
+										<img v-else src="../../static/images/xin1.png" @click="praiseDiaries(index)">
 									</el-col>
 									<el-col :span="6" style="text-align: left; border-right: 1px solid #DCDCDC;" class="zan">
 										{{item.praise}}
 									</el-col>
 									<el-col :span="6" style="text-align: right;" class="xiaoxi">
-										<img src="@/static/images/xiaoxi.png" @click="toComment(index)">
+										<img src="../../static/images/xiaoxi.png" @click="toComment(index)">
 									</el-col>
 									<el-col :span="6" style="text-align: left;" class="comment">
 										{{item.comment}}

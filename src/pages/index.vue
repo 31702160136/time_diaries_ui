@@ -39,11 +39,11 @@
 </template>
 
 <script>
-	import attention from "@/pages/m_index/attention.vue"
-	import home from "@/pages/m_index/home.vue"
-	import message from "@/pages/m_index/message.vue"
-	import me from "@/pages/m_index/me.vue"
-	import send_diary from "@/pages/m_index/send_diary.vue"
+	import attention from "@/pages/attention/attention.vue"
+	import home from "@/pages/home/home.vue"
+	import message from "@/pages/message/message.vue"
+	import me from "@/pages/me/me.vue"
+	import send_diary from "@/pages/send_diary/send_diary.vue"
 	export default {
 		data() {
 			return {
