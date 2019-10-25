@@ -44,7 +44,7 @@
 										{{item.name}}
 									</el-col>
 									<el-col :span="6" style="text-align: right;color: red;">
-										<el-button type="danger" plain @click="dialogVisible=true,delId=item.id" size="mini">删除</el-button>
+										<el-button type="warning" plain @click="delDiaries();delId=item.id" size="mini">删除</el-button>
 									</el-col>
 								</el-row>
 								<el-row>
@@ -60,8 +60,11 @@
 									</div>
 								</el-row>
 								<el-row class="time">
-									<el-col :span="24" style="text-align: left; color: #B4BCCC; font-size: 12px;">
+									<el-col :span="12" style="text-align: left; color: #B4BCCC; font-size: 12px;">
 										{{item.create_time}}
+									</el-col>
+									<el-col :span="12" style="text-align: right; color: #B4BCCC; font-size: 12px;">
+										{{item.type}}
 									</el-col>
 								</el-row>
 								<el-row class="more" type="flex" align="middle">
@@ -90,22 +93,13 @@
 				</el-col>
 			</el-row>
 		</div>
-		<el-dialog
-				title="提示"
-				:visible.sync="dialogVisible"
-				width="60%">
-			<span>确定要删除？</span>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="close()" size="mini">取 消</el-button>
-				<el-button type="danger" @click="success()" size="mini">确 定</el-button>
-			</span>
-		</el-dialog>
 	</div>
 </template>
 
 <script>
 	import { Indicator } from 'mint-ui';
 	import { Toast } from 'mint-ui';
+	import { MessageBox } from 'mint-ui';
 	import wimg from 'w-previewimg'
 	export default {
 		data() {
@@ -174,12 +168,19 @@
 							if(res.data.data.data[i].diaries.is_praise>0){
 								is_praise=true;
 							}
+							var type=""
+							if(res.data.data.data[i].diaries.type==1){
+								type="公开"
+							}else{
+								type="私密"
+							}
 							this.formData.push({
 								id:res.data.data.data[i].diaries.id,
 								name:res.data.data.data[i].diaries.name,
 								cover:res.data.data.data[i].diaries.cover,
 								content:text,
-								create_time:this.$tools().getTime(res.data.data.data[i].diaries.create_time),
+								type:type,
+								create_time:this.$tools().noopsycheTime(res.data.data.data[i].diaries.create_time),
 								praise:parseInt(res.data.data.data[i].diaries.praise),
 								comment:res.data.data.data[i].diaries.comment,
 								is_praise:is_praise,
@@ -221,28 +222,28 @@
 					}
 				});
 			},
-			success(){
-				var data={
-					id:this.delId
-				}
-				this.$http().delDiaries(data).then(res => {
-					var status = res.data.status;
-					if (status) {
-						Toast("删除成功")
-						for(var i=0;i<this.formData.length;i++){
-							if(data.id==this.formData[i].id){
-								this.formData.splice(i,1)
-								break
-							}
-						}
-						this.dialogVisible=false
-					} else {
-						Toast("删除成功")
+			delDiaries(){
+				MessageBox.confirm('确定删除日记？').then(action => {
+					var data={
+						id:this.delId
 					}
-				});
-			},
-			close(){
-				this.dialogVisible=false
+					this.$http().delDiaries(data).then(res => {
+						var status = res.data.status;
+						if (status) {
+							Toast("删除成功")
+							for(var i=0;i<this.formData.length;i++){
+								if(data.id==this.formData[i].id){
+									this.formData.splice(i,1)
+									break
+								}
+							}
+						} else {
+							Toast("删除成功")
+						}
+					})
+				},error=>{
+					
+				})
 			},
 			showBigImg (id,img) {
 				for(var i=0;i<this.formData.length;i++){
@@ -352,5 +353,8 @@
 		width: 100%;
 		height: 100%;
 		background: #000000;
+	}
+	.time{
+		padding: 8px;
 	}
 </style>

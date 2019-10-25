@@ -58,7 +58,7 @@
 			</div>
 			<div class="reply">
 				<div v-for="(item,index) of resData.comment" :key="index" class="back">
-					<div @click="reply(index)">
+					<div @click="reply(index,item)">
 						<el-row style="padding: 5px;">
 							<div class="reply-cover">
 								<img v-if="item.cover!=''" :src="item.cover" />
@@ -97,6 +97,7 @@
 </template>
 
 <script>
+	import { MessageBox } from 'mint-ui';
 	import { Indicator } from 'mint-ui';
 	import { Toast } from 'mint-ui';
 	import wimg from 'w-previewimg'
@@ -210,6 +211,20 @@
 					}
 				});
 			},
+			delComment(index,id){
+				var data={
+					id:id
+				}
+				this.$http().delComment(data).then(res => {
+					var status = res.data.status;
+					if (status) {
+						Toast("删除评论成功");
+						this.resData.comment.splice(index,1)
+					} else {
+						Toast("删除评论失败");
+					}
+				});
+			},
 			showBigImg (img) {
 				this.current=img
 				this.isShowBigImg = true
@@ -235,10 +250,18 @@
 					Indicator.close()
 				});
 			},
-			reply(index){
-				this.reply_name="回复"+this.resData.comment[index].name+"：";
-				this.formData.reply_user_id=this.resData.comment[index].user_id;
-				this.$refs.input.focus()
+			reply(index,item){
+				if(item.user_id==this.$store.state.me.user_id){
+					MessageBox.confirm('确定删除此评论？').then(action => {
+						this.delComment(index,item.id)
+					},error=>{
+					
+					});
+				}else{
+					this.reply_name="回复"+this.resData.comment[index].name+"：";
+					this.formData.reply_user_id=this.resData.comment[index].user_id;
+					this.$refs.input.focus()
+				}
 			},
 			blur(){
 				this.reply_name=''

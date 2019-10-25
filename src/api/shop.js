@@ -4,35 +4,10 @@ import axios from 'axios';
 import {cookie} from '@/utils/Cookie.js'
 import qs from "qs"
 
-//Get用法
-// let getGreens = () => {
-// 	return axios.get(url,{
-// 		params:{
-// 			type: "get",
-// 			method: "getGreens",
-// 			table: "green",
-// 			where: "1"
-// 		}
-// 	});
-// };
-
-//Post用法
-// let getGreens = () => {
-// 	return axios({
-// 		method:"post",
-// 		url:p_url,
-// 		data: qs.stringify({
-// 			type: "post",
-// 			method: "getGreens",
-// 			table: "green",
-// 			where: "1"
-// 		})
-// 	});
-// };
-//上传图片路径
 
 var host="http://www.yulemofang.cn/api/"
 var socket="www.yulemofang.cn/api/"
+// var socket="127.0.0.1:8082/api/"
 // var host="http://127.0.0.1:8082/api/"
 var upload_url=host+"v1/user/upload_image"
 var user="v1/user/"
@@ -183,6 +158,14 @@ let http = () => {
 				data:qs.stringify(data)
 			})
 		},
+		//删除评论
+		delComment(data) {
+			return axios({
+				method: "post",
+				url: host + diaries + "del_comment",
+				data:qs.stringify(data)
+			})
+		}
 
 	}
 }

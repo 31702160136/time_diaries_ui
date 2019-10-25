@@ -34,9 +34,11 @@
 							</div>
 							<el-col :span="20" class="infos">
 								<el-row>
-									<el-col :span="24" class="name" style="margin-bottom: 10px;color: #E6A23C;">
-										{{item.name}}
-									</el-col>
+									<div @click="toIntro(index)">
+										<el-col :span="24" class="name" style="margin-bottom: 10px;color: #E6A23C;">
+											{{item.name}}
+										</el-col>
+									</div>
 								</el-row>
 								<el-row>
 									<el-col :span="22" class="content">
@@ -290,6 +292,7 @@ ul,li{
 .main .panel{
 	background: white;
 	padding: 15px;
+	border-bottom: 1px solid #F0F2F5;
 }
 .main .cover img{
 	width: 60px;
