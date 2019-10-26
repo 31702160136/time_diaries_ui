@@ -35,7 +35,8 @@
 							name:"游客",
 							username:"0",
 							cover:require("@/static/images/touxiang2.png"),
-							fans:0
+							fans:0,
+							user_id:0
 						}
 						this.$store.commit("setMeYouke",data);
 						this.$store.state.refresh=false
@@ -66,7 +67,7 @@
 					myDialogueList=[]
 					var length=newMsgs.length
 					for(var i=0;i<length;i++){
-						var item=dialogue
+						var item=this.$tools().copy(dialogue)
 						var msg_len=newMsgs[i].message.length
 						item.newMsg=newMsgs[i].message[msg_len-1].content
 						item.time=newMsgs[i].message[msg_len-1].create_time
@@ -86,7 +87,7 @@
 								break
 							}
 							if(j==length-1){
-								var item=dialogue
+								var item=this.$tools().copy(dialogue)
 								var msg_len=newMsgs[i].message.length
 								item.newMsg=newMsgs[i].message[msg_len-1].content
 								item.time=newMsgs[i].message[msg_len-1].create_time
@@ -95,7 +96,7 @@
 								item.name=newMsgs[i].user.name
 								item.user_id=newMsgs[i].user.user_id
 								item.msgArr=item.msgArr.concat(newMsgs[i].message)
-								myDialogueList.push(item)
+								myDialogueList.unshift(item)
 							}
 						}
 					}
@@ -111,6 +112,9 @@
 								myDialogueList[i].name=newMsgs[j].user.name
 								myDialogueList[i].newTotal+=newMsgs[j].message.length
 								myDialogueList[i].msgArr=myDialogueList[i].msgArr.concat(newMsgs[j].message)
+								var dialogue=myDialogueList[i]
+								myDialogueList.splice(i,1)
+								myDialogueList.unshift(dialogue)
 								newMsgs.splice(j,1)
 							}
 						}
@@ -135,6 +139,7 @@
 					var data=JSON.parse(res.data)
 					switch(data.type){
 						case 0:
+							this.ws.send("pong")
 							break
 						case 1:
 							this.saveToCache(data)

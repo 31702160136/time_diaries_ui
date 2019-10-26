@@ -40,6 +40,7 @@ export default new Vuex.Store({
 			state.me.name=data.name;
 			state.me.username=data.username;
 			state.me.fans=data.fans;
+			state.me.user_id=data.user_id;
 		},
 		setIsLogin(state,data){
 			state.is_login=data;

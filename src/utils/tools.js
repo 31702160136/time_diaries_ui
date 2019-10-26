@@ -85,6 +85,13 @@ let tools=()=>{
 // 			
 // 			return Y + '/' + M + '/' + D // yyyy/mm/dd
 // 			return Y + '/' + M + '/' + D + ' ' + h + ':' + m + ':' + 's' // yyyy/mm/dd hh:mm:ss
+		},
+		copy(obj){
+			var newobj = {};
+			for ( var attr in obj) {
+				newobj[attr] = obj[attr];
+			}
+			return newobj;
 		}
 	}
 }
