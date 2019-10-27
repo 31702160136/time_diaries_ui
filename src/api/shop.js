@@ -6,7 +6,8 @@ import qs from "qs"
 
 
 var host="http://www.yulemofang.cn/api/"
-var socket="www.yulemofang.cn/api/"
+//websocket客户端发送消息不走80端口，所以使用90
+var socket="www.yulemofang.cn:90/api/"
 // var socket="127.0.0.1:8082/api/"
 // var host="http://127.0.0.1:8082/api/"
 var upload_url=host+"v1/user/upload_image"

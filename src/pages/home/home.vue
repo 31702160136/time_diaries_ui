@@ -5,7 +5,7 @@
 				<el-col :span="6" class="happy-right">
 				</el-col>
 				<el-col :span="6" class="happy-time">
-					<div @click="diary_type=0;recommend()" :style="diary_type==1? 'color: #DCDCDC':''">
+					<div @click="diary_type=0;recommend();bottomCaption='加载中...'" :style="diary_type==1? 'color: #DCDCDC':''">
 						推荐
 						<div class="happy-time-bottom" v-show="diary_type==0"></div>
 					</div>
@@ -143,6 +143,7 @@
 				if(page==1){
 					this.formData=[]
 				}
+				this.bottomCaption="加载中..."
 				this.data.page=page
 				this.data.type=2
 				this.init(this.data);

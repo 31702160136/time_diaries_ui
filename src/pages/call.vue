@@ -132,7 +132,6 @@
 				// 连接打开时触发
 				this.ws.onopen = () => {
 					console.log("Connection open ...")
-					this.$store.state.ws=this.ws
 				}
 				// 接收到消息时触发  
 				this.ws.onmessage = (res) => {
