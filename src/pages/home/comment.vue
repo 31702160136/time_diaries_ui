@@ -207,6 +207,7 @@
 							this.resData.diaries.praise+=1;
 						}
 					} else {
+						Toast("请登录")
 						this.$router.push("/login");
 					}
 				});
@@ -237,6 +238,10 @@
 				this.$router.go(-1);
 			},
 			doComment(data){
+				if(this.formData.content==''){
+					Toast("请输入内容")
+					return
+				}
 				Indicator.open('加载中...');
 				this.$http().Comment(data).then(res => {
 					var status = res.data.status;
@@ -245,6 +250,7 @@
 						this.init()
 						Toast(res.data.msg);
 					} else {
+						Toast("请登录")
 						this.$router.push("/login");
 					}
 					Indicator.close()

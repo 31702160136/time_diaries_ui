@@ -219,6 +219,7 @@
 							this.formData[index].praise+=1;
 						}
 					} else {
+						Toast("请登录")
 						this.$router.push("/login");
 					}
 				});

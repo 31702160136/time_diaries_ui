@@ -67,6 +67,7 @@
 
 <script>
 	import { Toast } from 'mint-ui';
+	import { Indicator } from 'mint-ui';
 	import {
 		http,
 		upload_url
@@ -109,9 +110,10 @@
 			},
 			handleAvatarSuccess(res, file) {
 				this.ruleForm.cover = res.data.url;
+				Indicator.close()
 			},
 			beforeAvatarUpload(file) {
-
+				Indicator.open("上传中...")
 			},
 			saveInfo(formName) {
 				formName.age = this.$tools().getTimeStamp(formName.age);

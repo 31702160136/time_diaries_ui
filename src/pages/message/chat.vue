@@ -61,6 +61,7 @@
 
 <script>
 	import { Toast } from 'mint-ui';
+	import { Indicator } from 'mint-ui';
 	export default {
 		data() {
 			return {
@@ -128,6 +129,7 @@
 						content:this.content,
 					}
 				var that=this
+				Indicator.open('发送...')
 				this.$http().sendMsg(data).then(res => {
 					var status = res.data.status;
 					if (status) {
@@ -212,8 +214,9 @@
 						this.content=''
 						this.toBottom(that)
 					} else {
-						Toast(res.data.msg);
+						Toast("消息发送失败");
 					}
+					Indicator.close()
 				});
 			},
 			toBottom(that){

@@ -77,7 +77,13 @@
 				</li>
 			</ul>
 			</mt-loadmore>
-			<wimg :show="isShowBigImg" :imgs="imgs" :currentImg="current" @close="closeBigImg()" style="z-index: 9;"></wimg>
+			<wimg
+				:show="isShowBigImg"
+				:imgs="imgs"
+				:currentImg="current"
+				@close="closeBigImg()"
+				style="z-index: 9;">
+			</wimg>
 			<el-row>
 				<el-col :span="24" style="text-align: center; color: #DCDCDC;">
 					{{this.bottomCaption}}
@@ -192,6 +198,7 @@
 							}
 						},10)
 					} else {
+						Toast("请登录")
 						this.$router.push("/login");
 					}
 					if(this.formData.length<=2){

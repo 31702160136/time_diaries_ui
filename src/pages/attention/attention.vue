@@ -77,6 +77,7 @@
 						this.listData=res.data.data;
 					} else {
 						this.$store.state.index=0;
+						Toast("请登录")
 						this.$router.push("/login");
 					}
 					Indicator.close()
