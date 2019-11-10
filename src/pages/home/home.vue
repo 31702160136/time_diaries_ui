@@ -96,6 +96,7 @@
 <script>
 	import { Indicator } from 'mint-ui';
 	import wimg from 'w-previewimg'
+	import { Toast } from 'mint-ui';
 	import { InfiniteScroll } from 'mint-ui'
 	export default {
 		data() {
